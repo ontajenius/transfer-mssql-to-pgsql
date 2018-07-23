@@ -4,6 +4,7 @@ const MssqlDB = require('./database/MssqlDB');
 const PostgresqlDB = require('./database/PostgresqlDB');
 
 (async () => {
+  console.time("run")
   let mssqlTable = await MssqlDB.getAllTable()
   let pgTable = await PostgresqlDB.getAllTable()
 

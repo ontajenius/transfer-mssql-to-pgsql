@@ -26,13 +26,14 @@ const MssqlDB = {
       PostgresqlDB.truncateTable(tableName[curr].pgTable)
     }
     await MssqlDB.transferRow(
-      await MssqlDB.getRows(tableName[curr].mssqlTable), 
+      await MssqlDB.getRows(tableName[curr].mssqlTable),
       await PostgresqlDB.getColumnTable(tableName[curr].pgTable),
       tableName[curr].pgTable)
     if (curr < tableName.length - 1) {
       await MssqlDB.transferTable(tableName, curr+1)
     } else {
       console.log("Transfer process success")
+      console.timeEnd("run")
       process.exit(0)
     }
   },
@@ -40,7 +41,7 @@ const MssqlDB = {
   transferRow: async (totalRow, column, table) => {
     let sql = await Mssql
     let request = sql.request()
-    
+
     return await request.query('SELECT * FROM '+table)
       .then(async record => {
           let i
